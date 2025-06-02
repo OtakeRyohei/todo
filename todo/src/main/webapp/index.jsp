@@ -6,13 +6,23 @@
 <head>
     <meta charset="UTF-8">
     <title>タスク一覧</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .badge-warning { background-color: #ffc107; } /* 未完了 */
         .badge-success { background-color: #28a745; } /* 完了 */
     </style>
 </head>
 <body class="bg-light">
+<div class="container mt-4 d-flex justify-content-between">
+    <!-- タスク登録ボタン -->
+    <a href="newTask.jsp" class="btn btn-success">＋ 新規タスク登録</a>
+
+    <!-- ログアウトボタン -->
+    <form action="LogoutServlet" method="POST">
+        <button type="submit" class="btn btn-outline-danger">ログアウト</button>
+    </form>
+</div>
+
 
 <div class="container mt-5">
     <h3 class="mb-4 fw-bold">タスク一覧</h3>
@@ -32,7 +42,7 @@
                             ${task.status}
                         </span>
                     </td>
-                    <td>${task.name}</td>
+                    <td>${task.title}</td>
                     <td>${task.deadline}</td>
                 </tr>
             </c:forEach>

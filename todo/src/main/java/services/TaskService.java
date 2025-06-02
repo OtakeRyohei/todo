@@ -42,7 +42,7 @@ public class TaskService {
 	}
 
 	public int insert(String title, String status, LocalDate deadline, int user_id) {
-		String sql = "insert into user(title, status, deadline, user_id) values (?,?,?,?);";
+		String sql = "insert into task(title, status, deadline, user_id) values (?,?,?,?);";
 		int id = 0;
 		
 		try(
@@ -52,10 +52,10 @@ public class TaskService {
 		{
 			stmt.setString(1, title);
 			stmt.setString(2, status);
-			stmt.Date(3, deadline);
+			stmt.setDate(3, java.sql.Date.valueOf(deadline));
 			stmt.setInt(4, user_id);
 			
-			ResultSet res = stmt.getGeneratedKeys();//
+			ResultSet res = stmt.getGeneratedKeys();
 			if (res.next()) {
 				id = res.getInt(1);
 			}
