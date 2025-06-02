@@ -9,7 +9,7 @@ import utils.Db;
 
 public class UserService {
 
-	public int insert(User user) {
+	public int register(User user) {
 		String sql = "insert into user(email, password) values (?,?);";
 		int id = 0;
 		
@@ -21,16 +21,46 @@ public class UserService {
 			stmt.setString(1, user.getEmail());
 			stmt.setString(2, user.getPass());
 			
-			ResultSet res = stmt.getGeneratedKeys();//
+			ResultSet res = stmt.getGeneratedKeys();
 			if (res.next()) {
 				id = res.getInt(1);
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-		}		
+		}
+		
 		return id;
 	}
+	
+	public User login(String email, String pass) { 
+		String sql = "SELECT * FROM user WHERE email = ? AND password = ?;";
+	    User user = null;
+	
+	    try (
+	        Connection conn = Db.open();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    	) 
+	    {
+	        stmt.setString(1, email);
+	        stmt.setString(2, pass);
+	
+	        ResultSet res = stmt.executeQuery();
+	        if (res.next()) {
+	            user = new User(
+	            	res.getInt("id"),
+	            	res.getString("email"),
+	            	res.getString("password")
+	            );
+	        }
+	    } 
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	
+	    return user;
+	}
+		
 	
 	
 }
