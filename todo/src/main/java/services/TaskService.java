@@ -1,9 +1,9 @@
 package services;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import beans.Task;
@@ -14,7 +14,7 @@ public class TaskService {
 	public ArrayList<Task> select(int user_id){
 		
 		ArrayList<Task> tasks = new ArrayList<>();
-		String sql = "SELECT * FROM task WHERE user_id = ?";
+		String sql = "SELECT * FROM task WHERE user_id = ?;";
 		
 		try(
 			Connection conn = Db.open();
@@ -41,7 +41,7 @@ public class TaskService {
 		return tasks;
 	}
 
-	public int insert(Task task) {
+	public int insert(String title, String status, LocalDate deadline, int user_id) {
 		String sql = "insert into user(title, status, deadline, user_id) values (?,?,?,?);";
 		int id = 0;
 		
@@ -50,10 +50,10 @@ public class TaskService {
 			PreparedStatement stmt = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
 			)
 		{
-			stmt.setString(1, task.getTitle());
-			stmt.setString(2, task.getStatus());
-			stmt.setDate(3, Date.valueOf(task.getDeadline()));
-			stmt.setInt(4, task.getUser_id());
+			stmt.setString(1, title);
+			stmt.setString(2, status);
+			stmt.Date(3, deadline);
+			stmt.setInt(4, user_id);
 			
 			ResultSet res = stmt.getGeneratedKeys();//
 			if (res.next()) {

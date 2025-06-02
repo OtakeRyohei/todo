@@ -1,30 +1,26 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
-import beans.Task;
-import beans.User;
-import services.TaskService;
+import services.UserService;
 
 /**
- * Servlet implementation class indexServlet
+ * Servlet implementation class RegisterServlet
  */
-@WebServlet("/indexServlet")
-public class indexServlet extends HttpServlet {
+@WebServlet("/registerServlet")
+public class registerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public indexServlet() {
+    public registerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +30,7 @@ public class indexServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		
-		TaskService ts = new TaskService();
-		ArrayList<Task> tasks = null;
-
-	    tasks = ts.select(user.getId());
-	    
-	    request.setAttribute("tasks", tasks);
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
-
+		request.getRequestDispatcher("register.jsp").forward(request, response);
 	}
 
 	/**
@@ -53,7 +38,16 @@ public class indexServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		UserService us = new UserService();
+		
+		String email = request.getParameter("email");
+		String pass = request.getParameter("password");
+		
+		int usid = us.register(email, pass);
+		
+		System.out.println(usid);
+		
+		response.sendRedirect("loginServlet");
 	}
 
 }

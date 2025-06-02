@@ -15,7 +15,7 @@ public class Db {
 		Context envContext  = (Context)initContext.lookup("java:/comp/env");
 		DataSource ds = (DataSource)envContext.lookup("jdbc/mariadb");
 		Connection conn = ds.getConnection();
-		//father
+		
 		return conn;
 	}
 

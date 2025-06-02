@@ -32,7 +32,7 @@ public class loginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
 	/**
@@ -48,8 +48,17 @@ public class loginServlet extends HttpServlet {
 		
 		User user = us.login(email, pass);
 		
-		session.setAttribute("user", user);
-		request.getRequestDispatcher("indexServlet").forward(request, response);
+		if(user != null) {
+			session.setAttribute("user", user);
+			response.sendRedirect("indexServlet");
+		}
+		else
+		{
+			String message = "ログインできません";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+	
 	}
 
 }

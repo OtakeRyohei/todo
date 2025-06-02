@@ -9,7 +9,7 @@ import utils.Db;
 
 public class UserService {
 
-	public int register(User user) {
+	public int register(String email, String pass) {
 		String sql = "insert into user(email, password) values (?,?);";
 		int id = 0;
 		
@@ -18,8 +18,8 @@ public class UserService {
 			PreparedStatement stmt = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
 			)
 		{
-			stmt.setString(1, user.getEmail());
-			stmt.setString(2, user.getPass());
+			stmt.setString(1, email);
+			stmt.setString(2, pass);
 			
 			ResultSet res = stmt.getGeneratedKeys();
 			if (res.next()) {
