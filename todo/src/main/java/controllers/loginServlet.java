@@ -47,6 +47,7 @@ public class loginServlet extends HttpServlet {
 		String pass = request.getParameter("password");
 		
 		User user = us.login(email, pass);
+		System.out.println(user.getId());
 		
 		if(user != null) {
 			session.setAttribute("user", user);
@@ -54,8 +55,6 @@ public class loginServlet extends HttpServlet {
 		}
 		else
 		{
-			String message = "ログインできません";
-			request.setAttribute("message", message);
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 	

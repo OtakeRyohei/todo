@@ -46,7 +46,6 @@ public class TaskService {
 		String sql = "select * from task where id = ?;";
 		Task task = null;
 
-		// try-with-resources
 		try (
 				Connection conn = Db.open();
 			    PreparedStatement stmt = conn.prepareStatement(sql);
