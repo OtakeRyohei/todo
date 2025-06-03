@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>新規作成</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 

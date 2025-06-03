@@ -20,6 +20,7 @@ public class UserService {
 		{
 			stmt.setString(1, email);
 			stmt.setString(2, pass);
+			stmt.executeUpdate();
 			
 			ResultSet res = stmt.getGeneratedKeys();
 			if (res.next()) {
